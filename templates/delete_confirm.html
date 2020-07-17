@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+	<div class="row">
+
+		<div class="alert alert-info col-sm-4" >
+			Are you sure want to delete ?  <b>{{ task.title}}</b> 
+		</div>
+
+		<div class="col-sm-8 offset-4" >
+		<a class="btn btn-secondary" href="{% url 'list' %}">Cancel</a>
+		</div>
+
+		<form method="POST" >
+			{% csrf_token %}
+
+			<div class="col-sm-8 offset-4">
+				<input class="btn btn-danger" type="Submit" Value="Delete Task">
+			</div>
+
+		</form>  
+
+	</div>
+{% else %}
+	<p> First Login to delete the Task </p>
+	<a href="{% url 'login' %}"> Login here </a>
+{% endif %}
+
+
+{% endblock %}

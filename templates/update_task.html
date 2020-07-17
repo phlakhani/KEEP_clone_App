@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+
+	<form method="POST" >
+	{% csrf_token %}
+
+	<!--
+
+	{{ form  }}  directly or do like below
+
+	-->
+	<div class="form-group row">
+
+		<div class="col-sm-8 offset-4 mb-3">
+		Title : {{ form.title }}
+		</div>
+
+		<div class="col-sm-8 offset-4 mb-3">
+		Description : {{ form.description }}
+		</div>
+
+		<div class="col-sm-8 offset-4 mb-3">
+		Is Task Completed : {{ form.completed }}
+		</div>
+
+		<span class="col-sm-8 offset-4 mb-3"><input class="btn btn-primary" type="Submit" Value= "Update" name="update"></span>
+
+	</div>
+
+	</div>
+	</form>
+
+{% else %}
+
+	<p> Login to see Task Details </p>
+	<a href="{% url 'login' %}"> Login here </a>
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<h1 style="text-align: center;" >KEEP notes </h1>
+
+{% if user.is_authenticated %}
+
+	<p> Hi {{ user.username }} !</p>
+	<a href="{% url 'logout' %}"> Logout </a>
+
+	<form style="text-align: center;" method="POST" action="/">  
+		<!-- action="/"  is to redirect to home page("" in url pattern) after submit -->
+		{% csrf_token %}
+		Title: {{ form.title }}
+		Description: {{ form.description }}    
+		<input class="btn btn-success" type="Submit" value="Create Task">
+	</form>
+
+{% else %}
+
+	<p> Login to add Tasks </p>
+	<a href="{% url 'login' %}"> Login here </a>
+	<a href="{% url 'sign_up' %}"> Sign Up </a>
+
+{% endif %}
+
+<h2 style="text-align: center;" >Total Tasks Available: {{ tasks.count }}</h2>
+
+
+
+<div class="container">
+{% for task in tasks %}
+<!--  {{task.id}} -->
+   <!--    <h4>Description: {{ task.description }}</h4>    -->
+<div class="task-div">
+	{% if task.completed == True %}
+	 <strike> <b> {{ task.title }}</b><br></strike>    
+	{% else %}
+	<b> {{ task.title }}</b><br>
+	{% endif %}
+	Created On: {{ task.createdOn }}<br>
+	IsCompleted: {{ task.completed }}
+	<!--Auth: {{ task.createdby }} -->
+
+<div >
+	<a  class="btn btn-info"   href="{% url 'updateTask' task.id %}">See Detail</a>
+	<a  class="btn btn-danger" href="{% url 'deleteTask' task.id %}">Delete</a>
+</div>
+
+</div>
+
+
+
+{% endfor %}
+
+{% endblock %}
+
+</div>
